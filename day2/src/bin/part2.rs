@@ -26,9 +26,9 @@ impl Submarine {
     }
 
     fn process_move(&mut self, movestr: &str) {
-        let parts: Vec<&str> = movestr.split(' ').collect();
-        let distance: i32 = parts[1].parse().expect("Couldn't parse integer");
-        match parts[0] {
+        let (direction, distance) = movestr.split_once(' ').expect("Couldn't split string");
+        let distance: i32 = distance.parse().expect("Couldn't parse integer");
+        match direction {
             "forward" => self.forward(distance),
             "down" => self.down(distance),
             "up" => self.up(distance),
