@@ -23,13 +23,23 @@ impl BingoNumber {
 
 impl fmt::Display for BingoNumber {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> Result<(), fmt::Error> {
-        write!(f, "({:0>3}, {})", self.number, if self.is_marked { 'x' } else { '-' })
+        write!(
+            f,
+            "({:0>3}, {})",
+            self.number,
+            if self.is_marked { 'x' } else { '-' }
+        )
     }
 }
 
 impl fmt::Debug for BingoNumber {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "({:0>3}, {})", self.number, if self.is_marked { 'x' } else { '-' })
+        write!(
+            f,
+            "({:0>3}, {})",
+            self.number,
+            if self.is_marked { 'x' } else { '-' }
+        )
     }
 }
 
@@ -41,28 +51,47 @@ trait BingoBoardTrait {
 
 impl BingoBoardTrait for Array2<BingoNumber> {
     fn is_winner(&self) -> bool {
-        if self.rows().into_iter().any(|row| row.iter().all(|x| x.is_marked)) {
+        if self
+            .rows()
+            .into_iter()
+            .any(|row| row.iter().all(|x| x.is_marked))
+        {
             return true;
         }
-        if self.columns().into_iter().any(|column| column.iter().all(|x| x.is_marked)) {
+        if self
+            .columns()
+            .into_iter()
+            .any(|column| column.iter().all(|x| x.is_marked))
+        {
             return true;
         }
         return false;
     }
 
     fn mark(&mut self, number: i32) {
-        self.iter_mut().for_each(|x| if x.number == number { x.is_marked = true; });
+        self.iter_mut().for_each(|x| {
+            if x.number == number {
+                x.is_marked = true;
+            }
+        });
     }
 
     fn score(&self, number: i32) -> i32 {
-        self.iter().fold(0, |a, b| if !b.is_marked { a + b.number } else { a }) * number
+        self.iter()
+            .fold(0, |a, b| if !b.is_marked { a + b.number } else { a })
+            * number
     }
 }
 
 fn read_input<P: AsRef<Path>>(filename: P) -> (Vec<i32>, Vec<Array2<BingoNumber>>) {
     let content = fs::read_to_string(filename).expect("Couldn't read from file");
     let mut line_iter = content.lines();
-    let gen_nums = line_iter.next().unwrap().split(',').map(|x| i32::from_str_radix(x, 10).unwrap()).collect();
+    let gen_nums = line_iter
+        .next()
+        .unwrap()
+        .split(',')
+        .map(|x| i32::from_str_radix(x, 10).unwrap())
+        .collect();
     let mut boards = Vec::new();
     let mut board: Vec<BingoNumber> = Vec::new();
     line_iter.next();
@@ -73,7 +102,7 @@ fn read_input<P: AsRef<Path>>(filename: P) -> (Vec<i32>, Vec<Array2<BingoNumber>
         } else {
             board.extend(
                 line.split_whitespace()
-                .map(|x| BingoNumber::new(i32::from_str_radix(x, 10).unwrap()))
+                    .map(|x| BingoNumber::new(i32::from_str_radix(x, 10).unwrap())),
             );
         }
     }

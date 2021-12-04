@@ -4,7 +4,6 @@ use std::fs;
 use std::path::Path;
 use std::process;
 
-
 struct Submarine {
     aim: i32,
     depth: i32,
@@ -14,7 +13,7 @@ struct Submarine {
 impl Submarine {
     fn forward(&mut self, distance: i32) {
         self.horizontal += distance;
-        self.depth += self.aim*distance;
+        self.depth += self.aim * distance;
     }
 
     fn down(&mut self, distance: i32) {
@@ -39,7 +38,14 @@ impl Submarine {
 
 impl fmt::Display for Submarine {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "({}, {}, {}) -> {}", self.depth, self.horizontal, self.aim, self.depth*self.horizontal)
+        write!(
+            f,
+            "({}, {}, {}) -> {}",
+            self.depth,
+            self.horizontal,
+            self.aim,
+            self.depth * self.horizontal
+        )
     }
 }
 
@@ -56,7 +62,11 @@ fn main() {
     }
 
     let directions = read_input(&args[1]);
-    let mut s = Submarine{depth: 0, horizontal: 0, aim: 0};
+    let mut s = Submarine {
+        depth: 0,
+        horizontal: 0,
+        aim: 0,
+    };
     for direction in directions {
         s.process_move(&direction);
     }

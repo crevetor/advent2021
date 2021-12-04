@@ -7,9 +7,9 @@ fn read_input(filename: &str) -> Vec<i32> {
     let content = fs::read_to_string(filename);
     let content = match content {
         Ok(c) => c,
-        Err(err) => panic!("Unable to read from file {} {:?}", filename, err)
+        Err(err) => panic!("Unable to read from file {} {:?}", filename, err),
     };
-    for line in content.lines()  {
+    for line in content.lines() {
         ret.push(line.parse().expect("Unable to parse int"));
     }
 

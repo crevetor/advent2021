@@ -7,9 +7,9 @@ fn read_input(filename: &str) -> Vec<i32> {
     let content = fs::read_to_string(filename);
     let content = match content {
         Ok(c) => c,
-        Err(err) => panic!("Unable to read from file {} {:?}", filename, err)
+        Err(err) => panic!("Unable to read from file {} {:?}", filename, err),
     };
-    for line in content.lines()  {
+    for line in content.lines() {
         ret.push(line.parse().expect("Unable to parse int"));
     }
 
@@ -26,8 +26,8 @@ fn main() {
     let depths = read_input(&args[1]);
     let mut larger: u32 = 0;
     let mut prev: i32 = depths[0..2].iter().sum();
-    for n in 1..depths.len()-3 {
-        let depth = depths[n..n+3].iter().sum();
+    for n in 1..depths.len() - 3 {
+        let depth = depths[n..n + 3].iter().sum();
         if depth > prev {
             larger += 1;
         }
