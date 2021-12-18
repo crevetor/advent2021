@@ -51,7 +51,7 @@ def main():
         line = ""
         for col in row:
             if col == 0:
-                line += '.'
+                line += ' '
             else:
                 line += '#'
         print(line)
